@@ -52,7 +52,7 @@ export default function Home() {
   }
 
   function handleProgressChange(event) {
-    updateProgress(event.currentTarget.form || event.currentTarget);
+    updateProgress(event.currentTarget);
   }
 
   async function handleSubmit(event) {
@@ -108,17 +108,7 @@ export default function Home() {
           </p>
         </section>
 
-        <form className="form" onSubmit={handleSubmit} onChange={handleProgressChange}>
-          <div className="progress-wrap">
-            <div className="progress-text">
-              <span>Заполнение заявки</span>
-              <span>{progress}%</span>
-            </div>
-            <div className="progress">
-              <div className="progress-bar" style={{ width: `${progress}%` }} />
-            </div>
-          </div>
-
+        <form className="form" onSubmit={handleSubmit} onChange={handleProgressChange} onInput={handleProgressChange}>
           <div className="section">
             <div className="section-title">1. Цель обращения</div>
             <div className="options">
@@ -223,6 +213,16 @@ export default function Home() {
 
         <div className="footer-note">
           Нажимая кнопку, вы соглашаетесь на обработку данных для обратной связи.
+        </div>
+      </div>
+
+      <div className="sticky-progress">
+        <div className="sticky-progress-text">
+          <span>Заполнение заявки</span>
+          <span>{progress}%</span>
+        </div>
+        <div className="sticky-progress-track">
+          <div className="sticky-progress-fill" style={{ width: `${progress}%` }} />
         </div>
       </div>
     </main>
