@@ -19,6 +19,41 @@ const purchaseConditions = [
 export default function Home() {
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  function updateProgress(form) {
+    const fields = [
+      'goal',
+      'name',
+      'phone',
+      'messenger',
+      'district',
+      'initialPayment',
+      'propertyType',
+      'deadline',
+      'area',
+      'renovation',
+      'conditions',
+      'comment'
+    ];
+
+    const data = new FormData(form);
+    let filled = 0;
+
+    fields.forEach((field) => {
+      if (field === 'conditions') {
+        if (data.getAll('conditions').length > 0) filled += 1;
+      } else if (data.get(field)) {
+        filled += 1;
+      }
+    });
+
+    setProgress(Math.round((filled / fields.length) * 100));
+  }
+
+  function handleProgressChange(event) {
+    updateProgress(event.currentTarget.form || event.currentTarget);
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -54,6 +89,7 @@ export default function Home() {
 
       setStatus('ok');
       form.reset();
+      setProgress(0);
     } catch (error) {
       setStatus('err');
     } finally {
@@ -72,13 +108,23 @@ export default function Home() {
           </p>
         </section>
 
-        <form className="form" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit} onChange={handleProgressChange}>
+          <div className="progress-wrap">
+            <div className="progress-text">
+              <span>Заполнение заявки</span>
+              <span>{progress}%</span>
+            </div>
+            <div className="progress">
+              <div className="progress-bar" style={{ width: `${progress}%` }} />
+            </div>
+          </div>
+
           <div className="section">
             <div className="section-title">1. Цель обращения</div>
             <div className="options">
-              <label className="option"><input type="radio" name="goal" value="Покупка новостройки" required /> Покупка новостройки: квартира или дом</label>
-              <label className="option"><input type="radio" name="goal" value="Покупка вторичного жилья" /> Покупка вторичного жилья</label>
-              <label className="option"><input type="radio" name="goal" value="Хочу продать" /> Хочу продать недвижимость</label>
+              <label className="option"><input type="radio" name="goal" value="Покупка новостройки" required /> 🏙️ Покупка новостройки: квартира или дом</label>
+              <label className="option"><input type="radio" name="goal" value="Покупка вторичного жилья" /> 🏠 Покупка вторичного жилья</label>
+              <label className="option"><input type="radio" name="goal" value="Хочу продать" /> 💰 Хочу продать недвижимость</label>
             </div>
           </div>
 
@@ -97,10 +143,10 @@ export default function Home() {
 
             <label>Удобный способ связи</label>
             <div className="options">
-              <label className="option"><input type="radio" name="messenger" value="Звонок" required /> Звонок</label>
-              <label className="option"><input type="radio" name="messenger" value="Telegram" /> Telegram</label>
-              <label className="option"><input type="radio" name="messenger" value="MAX" /> MAX</label>
-              <label className="option"><input type="radio" name="messenger" value="WhatsApp" /> WhatsApp</label>
+              <label className="option"><input type="radio" name="messenger" value="Звонок" required /> 📞 Звонок</label>
+              <label className="option"><input type="radio" name="messenger" value="Telegram" /> ✈️ Telegram</label>
+              <label className="option"><input type="radio" name="messenger" value="MAX" /> 💬 MAX</label>
+              <label className="option"><input type="radio" name="messenger" value="WhatsApp" /> 🟢 WhatsApp</label>
             </div>
           </div>
 
@@ -138,9 +184,9 @@ export default function Home() {
 
             <label>Ремонт</label>
             <div className="options">
-              <label className="option"><input type="radio" name="renovation" value="Да" /> Да</label>
-              <label className="option"><input type="radio" name="renovation" value="Нет" /> Нет</label>
-              <label className="option"><input type="radio" name="renovation" value="Желательно" /> Желательно</label>
+              <label className="option"><input type="radio" name="renovation" value="Да" /> ✅ Да</label>
+              <label className="option"><input type="radio" name="renovation" value="Нет" /> ❌ Нет</label>
+              <label className="option"><input type="radio" name="renovation" value="Желательно" /> ⭐ Желательно</label>
             </div>
           </div>
 
@@ -171,7 +217,7 @@ export default function Home() {
             {loading ? 'Отправляю...' : 'Отправить заявку'}
           </button>
 
-          {status === 'ok' && <div className="notice ok">Заявка отправлена. Я скоро свяжусь с вами.</div>}
+          {status === 'ok' && <div className="notice ok">✅ Заявка успешно отправлена. Я скоро свяжусь с вами.</div>}
           {status === 'err' && <div className="notice err">Не получилось отправить заявку. Попробуйте ещё раз.</div>}
         </form>
 
