@@ -23,9 +23,19 @@ export default function Home() {
 
   function updateProgress(form) {
     const fields = [
-      'goal', 'name', 'phone', 'messenger', 'district',
-      'initialPayment', 'propertyType', 'deadline', 'area',
-      'renovation', 'conditions', 'comment'
+      'goal',
+      'name',
+      'phone',
+      'messenger',
+      'district',
+      'initialPaymentFrom',
+      'initialPaymentTo',
+      'propertyType',
+      'deadline',
+      'area',
+      'renovation',
+      'conditions',
+      'comment'
     ];
 
     const data = new FormData(form);
@@ -54,13 +64,16 @@ export default function Home() {
     const form = event.currentTarget;
     const data = new FormData(form);
 
+    const initialPaymentFrom = data.get('initialPaymentFrom');
+    const initialPaymentTo = data.get('initialPaymentTo');
+
     const payload = {
       goal: data.get('goal'),
       name: data.get('name'),
       phone: data.get('phone'),
       messenger: data.get('messenger'),
       district: data.get('district'),
-      initialPayment: data.get('initialPayment'),
+      initialPayment: `От: ${initialPaymentFrom || 'не указано'} / До: ${initialPaymentTo || 'не указано'}`,
       propertyType: data.get('propertyType'),
       deadline: data.get('deadline'),
       area: data.get('area'),
@@ -206,9 +219,19 @@ export default function Home() {
           </div>
 
           <div className="section">
-            <div className="section-title">4. Бюджет и первый взнос</div>
-            <label>Первый взнос</label>
-            <input name="initialPayment" placeholder="Например: от 0 ₽ до 1 000 000 ₽" />
+            <div className="section-title">4. Первый взнос</div>
+
+            <div className="grid">
+              <div>
+                <label>От</label>
+                <input name="initialPaymentFrom" placeholder="Например: 500 000 ₽" />
+              </div>
+
+              <div>
+                <label>До</label>
+                <input name="initialPaymentTo" placeholder="Например: 2 000 000 ₽" />
+              </div>
+            </div>
           </div>
 
           <div className="section">
