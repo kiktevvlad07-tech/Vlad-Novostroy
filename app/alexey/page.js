@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'Алексей Максимов',
+  description: 'Старший эксперт по недвижимости Краснодара',
+};
+
 export default function AlexeyPage() {
   return (
     <main className="alexey-page">
