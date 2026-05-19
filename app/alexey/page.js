@@ -90,6 +90,7 @@ export default function AlexeyPage() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 12px;
+          margin-bottom: 12px;
         }
 
         .small-button {
@@ -110,11 +111,32 @@ export default function AlexeyPage() {
           border-color: #16a34a;
         }
 
+        .email-button {
+          display: block;
+          width: 100%;
+          padding: 16px;
+          border-radius: 18px;
+          background: rgba(255,255,255,0.86);
+          border: 1px solid #e4e7ec;
+          text-decoration: none;
+          color: #101828;
+          font-weight: 800;
+          font-size: 17px;
+          transition: 0.25s ease;
+          margin-bottom: 28px;
+        }
+
+        .email-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 16px 32px rgba(15,23,42,0.10);
+          border-color: #16a34a;
+        }
+
         .section-line {
           display: flex;
           align-items: center;
           gap: 14px;
-          margin: 28px 0 18px;
+          margin: 0 0 18px;
           color: #667085;
           font-weight: 800;
           font-size: 16px;
@@ -253,6 +275,13 @@ export default function AlexeyPage() {
             ⭐ Отзывы
           </a>
         </div>
+
+        <a
+          href="mailto:maximov-fond@mail.ru"
+          className="email-button"
+        >
+          ✉️ Email
+        </a>
 
         <div className="section-line">
           Чем могу помочь
