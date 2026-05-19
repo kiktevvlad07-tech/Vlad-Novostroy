@@ -184,24 +184,39 @@ export default function OlegPage() {
           Помогаю спокойно и безопасно проводить сделки с недвижимостью в Краснодаре.
         </p>
 
-        <a href="tel:+79181234567" className="main-call">
+        <a href="tel:+79654585525" className="main-call">
           📞 Позвонить
         </a>
 
         <div className="button-grid">
-          <a href="https://t.me/" target="_blank" className="small-button">
+          <a
+            href="https://t.me/+79654585525"
+            target="_blank"
+            className="small-button"
+          >
             ✈️ Telegram
           </a>
 
-          <a href="https://wa.me/79181234567" target="_blank" className="small-button">
+          <a
+            href="https://wa.me/79654585525"
+            target="_blank"
+            className="small-button"
+          >
             💬 WhatsApp
           </a>
 
-          <a href="https://max.ru/" target="_blank" className="small-button">
+          <a
+            href="#"
+            className="small-button"
+          >
             🚀 MAX
           </a>
 
-          <a href="#" className="small-button">
+          <a
+            href="https://www.ayax.ru/rieltory/9537/"
+            target="_blank"
+            className="small-button"
+          >
             ⭐ Отзывы
           </a>
         </div>
