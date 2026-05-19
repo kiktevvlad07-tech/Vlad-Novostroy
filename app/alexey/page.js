@@ -105,37 +105,55 @@ export default function AlexeyPage() {
           border-color: #16a34a;
         }
 
+        .section-line {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin: 28px 0 18px;
+          color: #667085;
+          font-weight: 800;
+          font-size: 16px;
+        }
+
+        .section-line::before,
+        .section-line::after {
+          content: "";
+          flex: 1;
+          height: 1px;
+          background: #d0d5dd;
+        }
+
         .special-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 10px;
-          margin: 28px 0 4px;
+          gap: 12px;
         }
 
         .special-card {
-          padding: 14px 10px;
-          border-radius: 18px;
-          background: rgba(255,255,255,0.7);
+          min-height: 104px;
+          padding: 18px 12px;
+          border-radius: 22px;
+          background: rgba(255,255,255,0.74);
           border: 1px solid #e4e7ec;
-          color: #344054;
-          font-weight: 700;
-          font-size: 14px;
+          color: #101828;
+          font-weight: 800;
+          font-size: 17px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
           transition: 0.25s ease;
+        }
+
+        .special-icon {
+          font-size: 32px;
         }
 
         .special-card:hover {
           transform: translateY(-3px);
           background: #ffffff;
           box-shadow: 0 14px 30px rgba(15,23,42,0.08);
-        }
-
-        .alexey-note {
-          margin-top: 30px;
-          padding-top: 24px;
-          border-top: 1px solid #e4e7ec;
-          color: #667085;
-          font-size: 15px;
-          line-height: 1.7;
         }
 
         @keyframes fadeUp {
@@ -168,6 +186,10 @@ export default function AlexeyPage() {
           .alexey-title {
             font-size: 36px;
           }
+
+          .alexey-subtitle {
+            font-size: 17px;
+          }
         }
       `}</style>
 
@@ -184,8 +206,10 @@ export default function AlexeyPage() {
 
         <p className="alexey-subtitle">
           Старший эксперт по недвижимости.
+          <br />
           Высшее юридическое образование.
-          Надёжное сопровождение сделок с недвижимостью.
+          <br />
+          Сопровождение сделок с недвижимостью.
         </p>
 
         <a href="tel:+79186222357" className="main-call">
@@ -225,27 +249,20 @@ export default function AlexeyPage() {
           </a>
         </div>
 
-        <div className="special-grid">
-          <div className="special-card">
-            ✅ Подбор недвижимости
-          </div>
-
-          <div className="special-card">
-            ⚖️ Юридическое сопровождение
-          </div>
-
-          <div className="special-card">
-            📄 Проверка документов
-          </div>
-
-          <div className="special-card">
-            🤝 Безопасные сделки
-          </div>
+        <div className="section-line">
+          Чем могу помочь
         </div>
 
-        <div className="alexey-note">
-          Спокойное и профессиональное сопровождение
-          сделок с недвижимостью на всех этапах.
+        <div className="special-grid">
+          <div className="special-card">
+            <div className="special-icon">🏢</div>
+            <div>Подбор недвижимости</div>
+          </div>
+
+          <div className="special-card">
+            <div className="special-icon">🏡</div>
+            <div>Продажа недвижимости</div>
+          </div>
         </div>
       </div>
     </main>
