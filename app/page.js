@@ -1,276 +1,271 @@
-'use client';
+export const metadata = {
+  title: 'Олег Киктев',
+  description: 'Эксперт по недвижимости Краснодара',
+};
 
-import { useState } from 'react';
-
-const purchaseConditions = [
-  'Семейная ипотека — ребёнок до 7 лет или ребёнок-инвалид до 18 лет',
-  'Семейная ипотека — двое детей до 18 лет',
-  'IT-ипотека',
-  'Льготная ипотека 2% в новых регионах',
-  'Сельская ипотека',
-  'Стандартная ипотека с субсидией',
-  'Военная ипотека',
-  'Военная + семейная ипотека',
-  'Наличный расчёт',
-  'Рассрочка',
-  'Нужна консультация по одобрению'
-];
-
-export default function Home() {
-  const [status, setStatus] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  function updateProgress(form) {
-    const fields = [
-      'goal',
-      'name',
-      'phone',
-      'messenger',
-      'district',
-      'initialPaymentFrom',
-      'initialPaymentTo',
-      'propertyType',
-      'deadline',
-      'area',
-      'renovation',
-      'conditions',
-      'comment'
-    ];
-
-    const data = new FormData(form);
-    let filled = 0;
-
-    fields.forEach((field) => {
-      if (field === 'conditions') {
-        if (data.getAll('conditions').length > 0) filled += 1;
-      } else if (data.get(field)) {
-        filled += 1;
-      }
-    });
-
-    setProgress(Math.round((filled / fields.length) * 100));
-  }
-
-  function handleProgressChange(event) {
-    updateProgress(event.currentTarget);
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setLoading(true);
-    setStatus('');
-
-    const form = event.currentTarget;
-    const data = new FormData(form);
-
-    const initialPaymentFrom = data.get('initialPaymentFrom');
-    const initialPaymentTo = data.get('initialPaymentTo');
-
-    const payload = {
-      goal: data.get('goal'),
-      name: data.get('name'),
-      phone: data.get('phone'),
-      messenger: data.get('messenger'),
-      district: data.get('district'),
-      initialPayment: `От: ${initialPaymentFrom || 'не указано'} / До: ${initialPaymentTo || 'не указано'}`,
-      propertyType: data.get('propertyType'),
-      deadline: data.get('deadline'),
-      area: data.get('area'),
-      renovation: data.get('renovation'),
-      conditions: data.getAll('conditions'),
-      comment: data.get('comment')
-    };
-
-    try {
-      const response = await fetch('/api/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (!response.ok) throw new Error('Ошибка отправки');
-
-      setStatus('ok');
-      form.reset();
-      setProgress(0);
-    } catch {
-      setStatus('err');
-    } finally {
-      setLoading(false);
-    }
-  }
-
+export default function OlegPage() {
   return (
-    <main className="page">
-      <div className="container">
-        <section className="hero">
-          <div className="badge">Краснодар • Новостройки • Ипотека</div>
+    <main className="oleg-page">
+      <style>{`
+        .oleg-page {
+          min-height: 100vh;
+          background: linear-gradient(135deg, #f4f7f5 0%, #edf4f2 50%, #e6f0ec 100%);
+          padding: 40px 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: Arial, sans-serif;
+        }
 
-          <img
-            src="/vlad.jpg"
-            alt="Владислав Киктев"
-            style={{
-              width: '130px',
-              height: '130px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              marginBottom: '18px',
-              border: '4px solid white',
-              boxShadow: '0 16px 35px rgba(0,0,0,0.12)'
-            }}
-          />
+        .oleg-card {
+          width: 100%;
+          max-width: 460px;
+          background: rgba(255,255,255,0.82);
+          backdrop-filter: blur(18px);
+          border-radius: 34px;
+          padding: 38px 28px;
+          box-shadow: 0 25px 60px rgba(15,23,42,0.12);
+          border: 1px solid rgba(255,255,255,0.7);
+          text-align: center;
+          animation: fadeUp 0.7s ease;
+        }
 
-          <h1>Владислав Киктев</h1>
+        .oleg-photo {
+          width: 132px;
+          height: 132px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-bottom: 22px;
+          border: 4px solid white;
+          box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+          animation: softZoom 0.8s ease;
+        }
 
-          <p className="subtitle">
-            Эксперт по новостройкам Краснодара. Помогу подобрать квартиру, дом или инвестиционный объект без комиссии и переплат.
-          </p>
+        .oleg-badge {
+          display: inline-block;
+          padding: 10px 18px;
+          border-radius: 999px;
+          background: linear-gradient(135deg,#dff7ea,#edfdf5);
+          color: #15803d;
+          font-weight: 700;
+          font-size: 14px;
+          margin-bottom: 20px;
+        }
 
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '22px' }}>
-            <a href="https://www.ayax.ru/rieltory/16356/" target="_blank" style={{ padding: '14px 18px', borderRadius: '18px', background: 'linear-gradient(135deg,#22c55e,#06b6d4)', color: 'white', textDecoration: 'none', fontWeight: '800' }}>
-              ⭐ Отзывы
-            </a>
+        .oleg-title {
+          font-size: 42px;
+          margin: 0 0 14px;
+          color: #0f172a;
+          line-height: 1.1;
+        }
 
-            <a href="https://t.me/ovkkik" target="_blank" style={{ padding: '14px 18px', borderRadius: '18px', background: '#ffffff', color: '#101828', textDecoration: 'none', fontWeight: '800', border: '1px solid #d0d5dd' }}>
-              ✈️ Telegram
-            </a>
+        .oleg-subtitle {
+          font-size: 18px;
+          line-height: 1.7;
+          color: #475467;
+          margin: 0 0 28px;
+        }
 
-            <a href="https://max.ru/krdshpatel" target="_blank" style={{ padding: '14px 18px', borderRadius: '18px', background: '#ffffff', color: '#101828', textDecoration: 'none', fontWeight: '800', border: '1px solid #d0d5dd' }}>
-              🚀 MAX
-            </a>
-          </div>
-        </section>
+        .main-call {
+          display: block;
+          width: 100%;
+          padding: 18px;
+          border-radius: 20px;
+          background: linear-gradient(135deg,#16a34a,#06b6d4);
+          color: white;
+          text-decoration: none;
+          font-size: 20px;
+          font-weight: 800;
+          margin-bottom: 18px;
+          box-shadow: 0 18px 40px rgba(34,197,94,0.28);
+          transition: 0.25s ease;
+        }
 
-        <form className="form" onSubmit={handleSubmit} onChange={handleProgressChange} onInput={handleProgressChange}>
-          <div className="section">
-            <div className="section-title">1. Цель обращения</div>
-            <div className="options">
-              <label className="option"><input type="radio" name="goal" value="Покупка новостройки" required /> 🏙️ Покупка новостройки: квартира или дом</label>
-              <label className="option"><input type="radio" name="goal" value="Покупка вторичного жилья" /> 🏠 Покупка вторичного жилья</label>
-              <label className="option"><input type="radio" name="goal" value="Хочу продать" /> 💰 Хочу продать недвижимость</label>
-            </div>
-          </div>
+        .main-call:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 24px 50px rgba(34,197,94,0.36);
+        }
 
-          <div className="section">
-            <div className="section-title">2. Как с вами связаться?</div>
+        .button-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          margin-bottom: 28px;
+        }
 
-            <div className="grid">
-              <div>
-                <label>Имя</label>
-                <input name="name" placeholder="Например: Владислав" required />
-              </div>
+        .small-button {
+          padding: 15px;
+          border-radius: 18px;
+          background: rgba(255,255,255,0.86);
+          border: 1px solid #e4e7ec;
+          text-decoration: none;
+          color: #101828;
+          font-weight: 700;
+          font-size: 16px;
+          transition: 0.25s ease;
+        }
 
-              <div>
-                <label>Телефон</label>
-                <input name="phone" placeholder="+7..." required />
-              </div>
-            </div>
+        .small-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 16px 32px rgba(15,23,42,0.10);
+          border-color: #16a34a;
+        }
 
-            <label>Удобный способ связи</label>
-            <div className="options">
-              <label className="option"><input type="radio" name="messenger" value="Звонок" required /> 📞 Звонок</label>
-              <label className="option"><input type="radio" name="messenger" value="Telegram" /> ✈️ Telegram</label>
-              <label className="option"><input type="radio" name="messenger" value="MAX" /> 💬 MAX</label>
-              <label className="option"><input type="radio" name="messenger" value="WhatsApp" /> 🟢 WhatsApp</label>
-            </div>
-          </div>
+        .section-line {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin: 0 0 18px;
+          color: #667085;
+          font-weight: 800;
+          font-size: 16px;
+        }
 
-          <div className="section">
-            <div className="section-title">3. Параметры поиска</div>
+        .section-line::before,
+        .section-line::after {
+          content: "";
+          flex: 1;
+          height: 1px;
+          background: #d0d5dd;
+        }
 
-            <label>Район</label>
-            <input name="district" placeholder="Например: Западный обход, ФМР, Губернский" />
+        .special-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
 
-            <label>Что рассматриваете?</label>
-            <select name="propertyType">
-              <option>Студия</option>
-              <option>1-комнатная</option>
-              <option>2-комнатная</option>
-              <option>3-комнатная</option>
-              <option>4+ комнат</option>
-              <option>Дом</option>
-            </select>
+        .special-card {
+          min-height: 104px;
+          padding: 18px 12px;
+          border-radius: 22px;
+          background: rgba(255,255,255,0.74);
+          border: 1px solid #e4e7ec;
+          color: #101828;
+          font-weight: 800;
+          font-size: 17px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          transition: 0.25s ease;
+        }
 
-            <div className="grid">
-              <div>
-                <label>Максимальный срок сдачи</label>
-                <select name="deadline">
-                  <option>Уже сдан</option>
-                  <option>До 6 месяцев</option>
-                  <option>До 1 года</option>
-                  <option>До 2 лет</option>
-                  <option>Не принципиально</option>
-                </select>
-              </div>
+        .special-icon {
+          font-size: 32px;
+        }
 
-              <div>
-                <label>Площадь</label>
-                <input name="area" placeholder="Например: от 45 м²" />
-              </div>
-            </div>
+        .special-card:hover {
+          transform: translateY(-3px);
+          background: #ffffff;
+          box-shadow: 0 14px 30px rgba(15,23,42,0.08);
+        }
 
-            <label>Ремонт</label>
-            <div className="options">
-              <label className="option"><input type="radio" name="renovation" value="Да" /> ✅ Да</label>
-              <label className="option"><input type="radio" name="renovation" value="Нет" /> ❌ Нет</label>
-              <label className="option"><input type="radio" name="renovation" value="Желательно" /> ⭐ Желательно</label>
-            </div>
-          </div>
+        @keyframes fadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(18px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
 
-          <div className="section">
-            <div className="section-title">4. Первый взнос</div>
+        @keyframes softZoom {
+          from {
+            opacity: 0;
+            transform: scale(0.94);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
 
-            <div className="grid">
-              <div>
-                <label>От</label>
-                <input name="initialPaymentFrom" placeholder="Например: 500 000 ₽" />
-              </div>
+        @media (max-width: 520px) {
+          .oleg-card {
+            padding: 30px 22px;
+          }
 
-              <div>
-                <label>До</label>
-                <input name="initialPaymentTo" placeholder="Например: 2 000 000 ₽" />
-              </div>
-            </div>
-          </div>
+          .oleg-title {
+            font-size: 36px;
+          }
 
-          <div className="section">
-            <div className="section-title">5. Условия покупки</div>
-            <div className="options">
-              {purchaseConditions.map((item) => (
-                <label className="option" key={item}>
-                  <input type="checkbox" name="conditions" value={item} />
-                  {item}
-                </label>
-              ))}
-            </div>
-          </div>
+          .oleg-subtitle {
+            font-size: 17px;
+          }
+        }
+      `}</style>
 
-          <div className="section">
-            <div className="section-title">6. Дополнительные сведения</div>
-            <textarea name="comment" placeholder="Напишите, что важно: школа рядом, минимальный платёж, переезд, инвестиция, маткапитал, продажа своей квартиры и т.д." />
-          </div>
+      <div className="oleg-card">
+        <img src="/oleg.jpg" alt="Олег Киктев" className="oleg-photo" />
 
-          <button className="submit" disabled={loading}>
-            {loading ? 'Отправляю...' : 'Отправить заявку'}
-          </button>
-
-          {status === 'ok' && <div className="notice ok">✅ Заявка успешно отправлена. Я скоро свяжусь с вами.</div>}
-          {status === 'err' && <div className="notice err">Не получилось отправить заявку. Попробуйте ещё раз.</div>}
-        </form>
-
-        <div className="footer-note">
-          Нажимая кнопку, вы соглашаетесь на обработку данных для обратной связи.
+        <div className="oleg-badge">
+          Краснодар • Недвижимость • Опыт работы более 8 лет
         </div>
-      </div>
 
-      <div className="sticky-progress">
-        <div className="sticky-progress-text">
-          <span>Заполнение заявки</span>
-          <span>{progress}%</span>
+        <h1 className="oleg-title">
+          Олег Киктев
+        </h1>
+
+        <p className="oleg-subtitle">
+          Помогаю спокойно и безопасно проводить сделки
+          с недвижимостью в Краснодаре.
+        </p>
+
+        <a href="tel:+79654585525" className="main-call">
+          📞 Позвонить
+        </a>
+
+        <div className="button-grid">
+          <a
+            href="https://t.me/+79654585525"
+            target="_blank"
+            className="small-button"
+          >
+            ✈️ Telegram
+          </a>
+
+          <a
+            href="https://wa.me/79654585525"
+            target="_blank"
+            className="small-button"
+          >
+            💬 WhatsApp
+          </a>
+
+          <a
+            href="#"
+            className="small-button"
+          >
+            🚀 MAX
+          </a>
+
+          <a
+            href="https://www.ayax.ru/rieltory/9537/"
+            target="_blank"
+            className="small-button"
+          >
+            ⭐ Отзывы
+          </a>
         </div>
-        <div className="sticky-progress-track">
-          <div className="sticky-progress-fill" style={{ width: `${progress}%` }} />
+
+        <div className="section-line">
+          Чем могу помочь
+        </div>
+
+        <div className="special-grid">
+          <div className="special-card">
+            <div className="special-icon">🏢</div>
+            <div>Подбор недвижимости</div>
+          </div>
+
+          <div className="special-card">
+            <div className="special-icon">🏡</div>
+            <div>Продажа недвижимости</div>
+          </div>
         </div>
       </div>
     </main>
