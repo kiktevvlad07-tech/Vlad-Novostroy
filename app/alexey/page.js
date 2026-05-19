@@ -280,7 +280,7 @@ export default function AlexeyPage() {
           href="mailto:maximov-fond@mail.ru"
           className="email-button"
         >
-          ✉️ Email
+          ✉️ maximov-fond@mail.ru
         </a>
 
         <div className="section-line">
