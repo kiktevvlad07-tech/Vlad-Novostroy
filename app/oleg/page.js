@@ -90,7 +90,7 @@ export default function OlegPage() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 12px;
-          margin-bottom: 28px;
+          margin-bottom: 12px;
         }
 
         .small-button {
@@ -106,6 +106,27 @@ export default function OlegPage() {
         }
 
         .small-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 16px 32px rgba(15,23,42,0.10);
+          border-color: #16a34a;
+        }
+
+        .email-button {
+          display: block;
+          width: 100%;
+          padding: 16px;
+          border-radius: 18px;
+          background: rgba(255,255,255,0.86);
+          border: 1px solid #e4e7ec;
+          text-decoration: none;
+          color: #101828;
+          font-weight: 800;
+          font-size: 17px;
+          transition: 0.25s ease;
+          margin-bottom: 28px;
+        }
+
+        .email-button:hover {
           transform: translateY(-3px);
           box-shadow: 0 16px 32px rgba(15,23,42,0.10);
           border-color: #16a34a;
@@ -251,6 +272,13 @@ export default function OlegPage() {
             ⭐ Отзывы
           </a>
         </div>
+
+        <a
+          href="mailto:kika200469@mail.ru"
+          className="email-button"
+        >
+          ✉️ kika200469@mail.ru
+        </a>
 
         <div className="section-line">
           Чем могу помочь
